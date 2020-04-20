@@ -1,0 +1,8 @@
+My experiments with C
+
+sockthread:
+classic thread synchronization using socketpair and poll
+
+uvc_beep:
+direct writes to registers of an USB device using libusb.
+Install libusb by: apt-get install libusb-dev

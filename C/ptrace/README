@@ -1,0 +1,16 @@
+1. test/uid.c - If you are the root user, this will provide access to roots shell(bash)
+
+a. Since uid.o contains dynamically linked libs, use myLib.so in lib/ and execute as:
+$ LD_PRELOAD=<Full absolute path to>/lib/myLib.so ./uid.o
+b. If uid.o is statically linked, (1) doesn't work. use id_injector from ptrace/ and execute as:
+$ ./id_injector ../test/uid.o
+
+2. test/simple.c - Simple code injection test. change the value of the variable by code injection
+
+Use code_inject from ptrace/
+First, locate the address where the variable is set in the assembly dump by running:
+$ objdump -S simple.o
+locate the assignment line in the function <main>. The line should look like:
+40055a: c7 45 fc a5 a5 a5 a5    movl   $0xa5a5a5a5,-0x4(%rbp)
+Edit code_inject.c to trap this address and run as:
+$ ./code_injector ../test/simple.o
